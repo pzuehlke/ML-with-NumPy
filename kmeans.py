@@ -13,7 +13,6 @@ def find_closest_centroids(X: np.ndarray, centroids: np.ndarray) -> np.ndarray:
           centroid for each example.
     """
     K = centroids.shape[0]      # Set K = number of clusters
-
     # Tile X to create an (m, K, n) array:
     X = np.tile(X[:, np.newaxis, :], (1, K, 1))
     # Compute the differences of each example to each centroid by broadcasting:
@@ -46,7 +45,7 @@ def recompute_centroids(X: np.ndarray, closest_to: np.ndarray, K: int
         if len(indices) > 0:
             new_centroids[k] = np.mean(X[indices], axis=0)
         else:
-            print(f"Warning: Cluster {k} is empty. Centroid unchanged.")
+            print(f"Warning: Cluster {k} is empty! Centroid unchanged.")
     return new_centroids
 
 
@@ -93,7 +92,7 @@ def run_kMeans(X: np.ndarray, K: int, max_iters: int = 10
     for j in range(max_iters):
         old_closest_to = closest_to.copy()
         closest_to = find_closest_centroids(X, centroids)
-        # Check for convergence
+        # Check for convergence:
         if np.array_equal(closest_to, old_closest_to):
             print(f"Convergence reached at iteration {j + 1}.")
             break
